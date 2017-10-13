@@ -2,19 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ParallaxManager : MonoBehaviour {
+public class BackgroundParallaxManager : MonoBehaviour {
 	public float backgroundSize; // must be set manually so the background knows how far
 								// to transform itself to either the left or the right.
 
+	public float parallaxSpeed; // controls the speed at which the background moves.
+
 	private Transform cameraTransform;
+	private float lastCameraX;
+
 	private Transform[] layers;
 	private float viewZone = 10;
 	private int leftIndex;
 	private int rightIndex;
 
+
 	private void Start() {
 		// populate the layers array with each of the background tiles we have created.
 		cameraTransform = Camera.main.transform;
+		lastCameraX = cameraTransform.position.x;
+
 		layers = new Transform[transform.childCount];
 
 		for (int i = 0; i < transform.childCount; i++) {
@@ -26,10 +33,19 @@ public class ParallaxManager : MonoBehaviour {
 	}
 
 	private void Update() {
-		if(Input.GetKeyDown (KeyCode.A)) {
+
+		// update the position of the background based on the speed at which the camera is moving
+		// and the parallax speed.
+		float deltaX = cameraTransform.position.x - lastCameraX;
+		transform.position += Vector3.right * (deltaX * parallaxSpeed);
+
+		// update the camera position
+		lastCameraX = cameraTransform.position.x;
+
+		// if we're too far to the left, scroll left, and vice versa.
+		if(cameraTransform.position.x < (layers[leftIndex].transform.position.x + viewZone)) {
 			scrollLeft ();
-		}
-		if (Input.GetKeyDown (KeyCode.D)) {
+		} else if(cameraTransform.position.x > (layers[rightIndex].transform.position.x - viewZone)) {
 			scrollRight ();
 		}
 	}
