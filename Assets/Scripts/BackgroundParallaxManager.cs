@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BackgroundParallaxManager : MonoBehaviour {
+
+	public bool scrolling, parallax; // allow scrolling and parallax effects to be enabled
+									// or disabled.
+
 	public float backgroundSize; // must be set manually so the background knows how far
 								// to transform itself to either the left or the right.
 
@@ -34,19 +38,26 @@ public class BackgroundParallaxManager : MonoBehaviour {
 
 	private void Update() {
 
-		// update the position of the background based on the speed at which the camera is moving
-		// and the parallax speed.
-		float deltaX = cameraTransform.position.x - lastCameraX;
-		transform.position += Vector3.right * (deltaX * parallaxSpeed);
+		if (parallax) {
+
+			// update the position of the background based on the speed at which the camera is moving
+			// and the parallax speed.
+			float deltaX = cameraTransform.position.x - lastCameraX;
+			transform.position += Vector3.right * (deltaX * parallaxSpeed);
+
+		}
 
 		// update the camera position
 		lastCameraX = cameraTransform.position.x;
 
-		// if we're too far to the left, scroll left, and vice versa.
-		if(cameraTransform.position.x < (layers[leftIndex].transform.position.x + viewZone)) {
-			scrollLeft ();
-		} else if(cameraTransform.position.x > (layers[rightIndex].transform.position.x - viewZone)) {
-			scrollRight ();
+		if (scrolling) {
+			
+			// if we're too far to the left, scroll left, and vice versa.
+			if (cameraTransform.position.x < (layers [leftIndex].transform.position.x + viewZone)) {
+				scrollLeft ();
+			} else if (cameraTransform.position.x > (layers [rightIndex].transform.position.x - viewZone)) {
+				scrollRight ();
+			}
 		}
 	}
 
