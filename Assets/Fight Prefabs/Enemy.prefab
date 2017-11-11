@@ -83,7 +83,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc4c33bcc2b624ca5bb738dac528babd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pName: "Bad Guy \U0001F608 U+1F608"
+  pName: Bad Guy
   isEnemy: 1
   enemy: {fileID: 0}
   rightArm: {fileID: 114575160437802512, guid: 18b3e133d3394462ba8b9d0a05da3681, type: 2}
@@ -113,8 +113,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RATE: 5
   STRENGTH: 10
-  MAX: 1000
-  STAMINA: 200
+  MAX: 10000
+  STAMINA: 20
   pointMax: 999.99
   heartPoints: 0
 --- !u!212 &212430243120996136
@@ -148,7 +148,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 4ec908a40d30c46e5960ceb5f0e29f1f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4ac4fe1199696456b90d36ced245fa8a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

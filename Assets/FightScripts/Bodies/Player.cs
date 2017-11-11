@@ -64,8 +64,8 @@ public class Player : MonoBehaviour {
 
 	public void update(){
 		addHeart();
-		//each attack does a little bit of max points loss (exhaustion) which is proportional to cost of attack/stamina
 		//you can always do any action, and it will just bring your heart points down to 1 until next update cycle
+		//except some attacks have a minimum-points cutoff
 		//turn regen off during an attack/motion
 		pendingAction();
 
@@ -98,29 +98,39 @@ public class Player : MonoBehaviour {
 		}
 	}
 
+	public void fatigue(double weaken){
+		heartPoints -= weaken;
+		if (heartPoints <= 0) {heartPoints = 1;}
+	}
+
 	public void tieListener(KeyListener listener){
 		this.listener = listener;
 		listener.player = this;
 	}
 
 	public Action listen(){
-		if (isEnemy) return null; //TODO implement AI
-		if (Input.inputString.Length>0){
+
+		if (isEnemy) 
+			return null; //TODO implement AI
+
+		if (Input.inputString.Length > 0){
+
 			List<char> keys = new List<char>();
-			foreach(char c in Input.inputString){
+			foreach (char c in Input.inputString){
 				keys.Add(c);
 			}
 			keys.Sort();
+
 			string s = "";
 			foreach (char c in keys){
 				s += c;
 			}
-			print(s);
-			if (table[s]!= null){
-				print("yay!!");
+
+			if (s.Length > 0){
+				print("Keystring [" + s + "] has been pressed");
 			}
+
 			return (Action)table[s];
-			//print(Input.inputString);
 		}
 		return null;
 	}
@@ -131,7 +141,7 @@ public class Player : MonoBehaviour {
 		Action pendingAction = listen();
 			
 		if (pendingAction == null) {
-//			print("No valid keys pressed");
+			//No valid keys pressed
 		}
 		else if (pendingAction is Cancel){
 			GameLoop.endEvent(performing); 
@@ -141,17 +151,13 @@ public class Player : MonoBehaviour {
 			AttackEvent e = new AttackEvent ((Attack)pendingAction, this, enemy);
 			GameLoop.addToList (e);
 			performing = e;
-			heartPoints -= performing.cost();
 		}
 
 		else if (pendingAction is Move) {
 			MoveEvent e = new MoveEvent (this, (Move)pendingAction);
 			GameLoop.addToList (e);
 			performing = e;
-			heartPoints -= performing.cost();
 		}
-
-		if (heartPoints <= 0) {heartPoints = 1;}
 	}
 
 }

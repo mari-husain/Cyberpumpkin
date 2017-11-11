@@ -28,7 +28,7 @@ public class GameLoop : MonoBehaviour {
 			Destroy(gameObject);
 		}
 
-//		winText.text = "";
+		winText.text = "";
 
 		player1Listener = (player1.isEnemy)? (KeyListener)gameObject.AddComponent(typeof(AIListener)): (KeyListener)gameObject.AddComponent(typeof(PlayerListener));
 		player2Listener = (player2.isEnemy)? (KeyListener)gameObject.AddComponent(typeof(AIListener)): (KeyListener)gameObject.AddComponent(typeof(PlayerListener));

@@ -53,10 +53,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keys: 71007700
-  weaken: 20
-  speed: 20
+  weakenList: 
   costList: 
   strengthList: 
+  speed: 0
 --- !u!212 &212505627780972966
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -18,16 +18,21 @@ public class AttackEvent: GameEvent{
 		this.position = victim.position;
 		this.agent = attacker;
 		this.victim = victim;
-		Debug.Log("I'm in here");
 	}
 
 	override public void update(){
 		if (frame == FRAMES-1) {
 			GameLoop.endEvent (this);
 		}
+
 		double precision= 1-Math.Abs(victim.position-position);
 		if (precision<0) precision = 0;
+
 		victim.hit(precision*attack.strength(frame), precision*attack.weaken(frame));
+		agent.fatigue(attack.cost(frame));
+
+		if (agent.heartPoints <= 0) agent.heartPoints = 1;
+
 		frame ++;
 	}
 

@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class PlayerListener : KeyListener {
 
-	string lastPressed;
-	Hashtable table = new Hashtable();
-
 	//called by GameLoop
 	//RegistersCurrentKeyHits
 	override public void update(){

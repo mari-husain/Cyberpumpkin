@@ -15,13 +15,16 @@ public class MoveEvent: GameEvent{
 	}
 
 	override public void update(){
-		frame++;
-		if (frame <=0){
-			agent.position += (double)dir/(double)move.movement(frame);
-		}
 		if (frame == FRAMES) {
 			GameLoop.endEvent (this);
 		}
+
+		agent.fatigue(move.cost(frame));
+		agent.position += (double)dir/(double)move.movement(frame);
+
+		if (agent.heartPoints <= 0) agent.heartPoints = 1;
+
+		frame++;
 	}
 
 	public override int cost (){
